@@ -1,0 +1,54 @@
+# Training configuration
+seed: 21
+max_len: 4096
+learning_rate: 1e-4
+batch_size: 5
+accumulate_grad_batches: 12
+max_epochs: 35
+weight_decay: 0.01
+accelerator: gpu
+devices: 2
+strategy: ddp_find_unused_parameters_true
+val_check_interval: 1000
+
+# Model configuration
+JambaConfig:
+  vocab_size: 9
+  tie_word_embeddings: False
+  hidden_size: 384
+  intermediate_size: 24
+  num_hidden_layers: 12
+  num_attention_heads: 16
+  num_key_value_heads: 16
+  pad_token_id: 3
+  bos_token_id: 0
+  eos_token_id: 1
+  num_experts: 8
+  expert_layer_period: 2
+  expert_layer_offset: 1
+  attn_layer_period: 8
+  attn_layer_offset: 4
+  use_mamba_kernels: True
+  mamba_d_state: 16
+  mamba_d_conv: 4
+  mamba_expand: 2
+  mamba_dt_rank: auto
+
+# Data path and output directories
+train_file: /home/reagan/Projects/RNA_optimization/model/models_put_on_github/finetune_data_UTR/all_HLs_human_mouse_UTR_train.csv
+val_file: /home/reagan/Projects/RNA_optimization/model/models_put_on_github/finetune_data_UTR/all_HLs_human_mouse_UTR_val.csv
+test_file: /home/reagan/Projects/RNA_optimization/model/models_put_on_github/finetune_data_UTR/all_HLs_human_mouse_UTR_test.csv
+ckpt_dir: /home/reagan/Projects/RNA_optimization/model/models_put_on_github/test_checkpoint
+log_dir: /home/reagan/Projects/RNA_optimization/model/models_put_on_github/test_checkpoint
+pretrained_model_path: /home/reagan/Projects/RNA_optimization/model/models_put_on_github/14M_stage1_pretrained_on_mammals.ckpt
+
+# Checkpointing configuration
+monitor: val_loss
+mode: min
+save_top_k: -1
+save_last: False
+every_n_steps: 100
+ckpt_filename: "{epoch}_{step}_{train_loss:.10f}_{val_loss:.10f}"
+
+
+# double checked finish
