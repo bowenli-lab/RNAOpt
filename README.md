@@ -29,7 +29,7 @@ pip install biopython
 
 
 If the installation of mamba-ssm and casual-conv1d are not successful (frequently happens), you can choose to install manually by two methods:
-Run this command on your own machine to get the information for versions, then look up for built wheels from the release of [mamba](https://github.com/state-spaces/mamba/releases) and [causal_conv1d](https://github.com/Dao-AILab/causal-conv1d/releases) repository:
+1. Run following command on your own machine to get the information for versions, then look up for built wheels from the release of [mamba](https://github.com/state-spaces/mamba/releases) and [causal_conv1d](https://github.com/Dao-AILab/causal-conv1d/releases) repository, then download the pre-built wheel to your machine.
 
 ```
 import sys
@@ -40,6 +40,8 @@ print(f"🧪 CUDA Version: {torch.version.cuda}")
 print(f"🥨 Use CXX11 ABI: {torch._C._GLIBCXX_USE_CXX11_ABI}")
 
 ```
+After downloading the machine, use `pip install` to install it.
+
 If there is no pre-built wheel for your machine environment, you can download the code and build by yourself:
 
 ```
