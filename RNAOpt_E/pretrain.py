@@ -8,11 +8,29 @@ from torch.utils.data import DataLoader
 import torch
 import lightning as pl
 from lightning.pytorch.callbacks import ModelCheckpoint
+import argparse
+import os
 
 
 if __name__ == "__main__":
-    config = load_config("/home/reagan/Projects/RNA_optimization/model/models_put_on_github/model_modules/configs/pretrain_config.yaml")
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--config", 
+        type=str, 
+        default=None,
+        help="Path to the config file"
+    )
+
+    args = parser.parse_args()
+
+    if os.path.exists(args.config):
+        config = load_config(args.config)
+        print(f"Configuration loaded successfully from: {args.config}")
+    else:
+        raise FileNotFoundError(f"Config file not found at: {args.config}")
     print("Configuration loaded successfully.")
+    
 
     torch.set_float32_matmul_precision("medium")
     pl.seed_everything(config['seed'])

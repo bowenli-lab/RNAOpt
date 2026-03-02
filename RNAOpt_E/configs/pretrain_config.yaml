@@ -5,7 +5,7 @@ learning_rate: 1e-4
 batch_size: 4
 accumulate_grad_batches: 32
 warmup_steps: 1000
-total_steps: 1000000000000000000000000000
+total_steps: 10000000
 weight_decay: 0.01
 mask_prob: 0.15
 log_every_n_steps: 1
@@ -53,6 +53,3 @@ save_last: False
 every_n_steps: 100
 ckpt_filename: "{epoch}_{step}_{train_loss:.10f}_{val_loss:.10f}"
 
-
-
-# Double checked finish

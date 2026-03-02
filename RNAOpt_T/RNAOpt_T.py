@@ -1,7 +1,5 @@
 
 import sys
-sys.path.append("/home/reagan/Projects/RNA_optimization/model/models_put_on_github/model_modules")
-
 from model import RNA_MaskedLM_finetune, RNA_MaskedLM_pretrain
 from utils import RNATokenizer, RNADataset_search, load_config, load_config_distill_search
 
@@ -17,7 +15,6 @@ import lightning as pl
 
 from lightning.pytorch.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import WandbLogger  
-import wandb
 from torch.optim.lr_scheduler import SequentialLR, LinearLR, CosineAnnealingLR
 import pandas as pd
 import pickle
@@ -31,13 +28,9 @@ import torch
 
 from CAI import CAI
 from collections import defaultdict
-import pandas as pd
 from Bio.Seq import Seq
-
-
-
-
-
+import argparse
+import os
 
 # --- Load codon frequency table ---
 human_codon_freq_path = "/home/reagan/Projects/RNA_optimization/model/model_with_UTR/search_algo/human_codon_freq_table.txt"
@@ -203,7 +196,7 @@ def CoT_distill_CAI_filter(start_sequence, beam_width=10, max_steps=10, max_len=
 
     distill_model.load_state_dict(distill_full_state_dict, strict=True)
     
-    distill_model.eval().to("cuda:0")  # Set to eval mode and move to GPU
+    distill_model.eval().to("cuda:0") 
     distill_model = torch.nn.DataParallel(distill_model, device_ids=[0, 1])
 
 
@@ -215,7 +208,7 @@ def CoT_distill_CAI_filter(start_sequence, beam_width=10, max_steps=10, max_len=
 
     full_model.load_state_dict(full_model_full_state_dict, strict=True)
 
-    full_model.eval().to("cuda:0")  # Set to eval mode and move to GPU
+    full_model.eval().to("cuda:0")
     full_model = torch.nn.DataParallel(full_model, device_ids=[0, 1])
 
     visited_sequences = set()
@@ -224,25 +217,23 @@ def CoT_distill_CAI_filter(start_sequence, beam_width=10, max_steps=10, max_len=
     top_sequences_scores_merged = []
     top_sequences_hls = []
     top_sequences_CAIs = []
-    
-    
-    # Initialize the beam with the starting sequence and its score
+
 
     initial_score_tensor, initial_CAI_tensor, merged_score_tensor = score_function_CAI_filter([start_sequence], max_len=max_len, model=full_model, tokenizer=tokenizer, utr3=utr3, utr5=utr5, theta=theta)
 
     initial_hl = initial_score_tensor.item()
     initial_CAI = initial_CAI_tensor.item()
-    initial_merged_score = merged_score_tensor.squeeze(0).item()  # Remove batch dimension if present
+    initial_merged_score = merged_score_tensor.squeeze(0).item()
     
     print("Initial Score: ", initial_hl)
     print("Initial CAI: ", initial_CAI)
     print("Initial Merged Socre: ", initial_merged_score)
 
     
-    beam = [start_sequence]  # Initialize beam with the initial sequence and its score
+    beam = [start_sequence] 
 
     
-    visited_sequences.add(start_sequence)  # Store in a hashable form
+    visited_sequences.add(start_sequence)
 
     print("Initial Sequence: ", start_sequence)
 
@@ -256,8 +247,7 @@ def CoT_distill_CAI_filter(start_sequence, beam_width=10, max_steps=10, max_len=
     best_CAI_tracker = []
     best_merged_metric_tracker = []
     
-    # time_stamp_tracker = []
-    # step_tracker = []
+
     beam_tracker = {}
 
     no_improvement_counter = 0
@@ -275,20 +265,15 @@ def CoT_distill_CAI_filter(start_sequence, beam_width=10, max_steps=10, max_len=
         
         for seq in beam:
             
-            successors_original = get_possible_moves(seq, visited_sequences)  # Generate possible next sequences
+            successors_original = get_possible_moves(seq, visited_sequences) 
 
             random.shuffle(successors_original)
 
-            num_samples = int(0.5 * len(successors_original))  # Sample a fraction of successors
+            num_samples = int(0.5 * len(successors_original))
             print(f"Number of successors for sequence: {num_samples}")
-            successors = successors_original[:num_samples]  # Limit the number of successors to 100 for efficiency
-            seq_dir_to_full_prediction = successors_original[num_samples:num_samples + beta]  # Keep the original sequence for direct full model prediction
-            # print(seq_dir_to_full_prediction)
-            samples_direct_to_full_prediction.extend(seq_dir_to_full_prediction)  # Sample a fraction of successors for direct full model prediction
-
-            
-            
-            # print("Number of possible moves: ", len(successors))
+            successors = successors_original[:num_samples]  
+            seq_dir_to_full_prediction = successors_original[num_samples:num_samples + beta] 
+            samples_direct_to_full_prediction.extend(seq_dir_to_full_prediction)
 
             _, _, merged_metric_values = score_function_CAI_filter(successors, max_len=max_len, model=distill_model, tokenizer=tokenizer, batch_size=batch_size, utr3=utr3, utr5=utr5, theta=theta)  # Evaluate new sequence
                 
@@ -296,10 +281,8 @@ def CoT_distill_CAI_filter(start_sequence, beam_width=10, max_steps=10, max_len=
             for i, seq in enumerate(successors):
                 
                 all_candidates.append(seq)
-                # all_candidates_hl.append(hl[i].item())
-                # all_candidates_logits.append(logits[i].item())
                 all_candidates_merged_metrics.append(merged_metric_values[i].item())
-                # print("length of all_candidates_merged_metrics: ", len(all_candidates_merged_metrics))
+               
                 visited_sequences.add(seq)
 
             for i, seq in enumerate(seq_dir_to_full_prediction):
@@ -344,7 +327,7 @@ def CoT_distill_CAI_filter(start_sequence, beam_width=10, max_steps=10, max_len=
             beam_tracker[seq] = step
  
    
-    return top_sequences, top_sequences_hls, top_sequences_CAIs, top_sequences_scores_merged, beam_tracker #, torch.tensor(all_best_scores_tracker).cpu().tolist(), torch.tensor(time_stamp_tracker).cpu().tolist(), torch.tensor(step_tracker).cpu().tolist()  # Return top 10 sequences and their scores
+    return top_sequences, top_sequences_hls, top_sequences_CAIs, top_sequences_scores_merged, beam_tracker
 
 
 
@@ -359,12 +342,23 @@ def CoT_distill_CAI_filter(start_sequence, beam_width=10, max_steps=10, max_len=
 
 
 if __name__ == "__main__":
-    import pandas as pd
-    
-    
-    config = load_config_distill_search("/home/reagan/Projects/RNA_optimization/model/models_put_on_github/model_modules/configs/distill_search_config.yaml")
-    print("Config: ", config)
-    config['batch_size'] = 48
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--config", 
+        type=str, 
+        default=None,
+        help="Path to the config file"
+    )
+
+    args = parser.parse_args()
+
+    if os.path.exists(args.config):
+        config = load_config(args.config)
+        print(f"Configuration loaded successfully from: {args.config}")
+    else:
+        raise FileNotFoundError(f"Config file not found at: {args.config}")
+    print("Configuration loaded successfully.")
 
     set_seed(config['seed'])
     if config["start_from_protein"] == True:
@@ -372,7 +366,7 @@ if __name__ == "__main__":
         cds = back_translate_least_frequent(input_protein_sequence, AA_TO_LEAST_CODON) + "TGA"
     
     else:
-        cds = config["cds_kal"].upper()  # Convert to uppercase to ensure consistency
+        cds = config["cds"].upper()  # Convert to uppercase to ensure consistency
     
     utr5 = config["utr5"]
     utr3 = config["utr3"]
@@ -422,7 +416,6 @@ if __name__ == "__main__":
     end_time = time.time()
     print("Total Time: ", end_time - start_time)
 
-    # print("Top Sequence: ", top_sequences)
     # save top_sequences to a csv file
     step_list = []
     for seq in top_sequences:
@@ -430,6 +423,6 @@ if __name__ == "__main__":
         step_list.append(step)
 
     df_top = pd.DataFrame({"Top_Sequence": top_sequences, "Top_HL": top_sequences_hls, "Top_CAIs": top_sequences_CAIs, "Top_Score_Merged": top_sequences_scores_merged, "Step": step_list})
-    df_top.to_csv("/home/reagan/Projects/RNA_optimization/model/models_put_on_github/CoT/formal_optimization/kal/kal_sequences_distill_merged_metric_20CAI_kal_sijin_sent_origin.csv")
+    df_top.to_csv(config["result_save_path"])
 
    

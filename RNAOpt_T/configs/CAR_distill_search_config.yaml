@@ -18,7 +18,7 @@ cds: ATGGCCTTACCAGTGACCGCCTTGCTCCTGCCGCTGGCCTTGCTGCTCCACGCCGCCAGGCCGGACATCCAAATG
 distill_model_path: ./14M_stage2_distilled_finetuend_on_human_mouse.ckpt
 full_model_path: ./14M_stage2_finetuned_on_human_mouse.ckpt
 
-
+result_save_path: <Path to directory that you want to save sequences are checked>
 
 vocab_size: 9
 distill_JambaConfig:
