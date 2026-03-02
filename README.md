@@ -1,4 +1,4 @@
-# RNAOpt: Co-design of mRNA Functional Regions via Inference-Time Parallel Reasoning
+# 🧬 RNAOpt: Co-design of mRNA Functional Regions via Inference-Time Parallel Reasoning 🧬
 Welcome to the official implementation of **RNAOpt**, an mRNA design platform with inference time reasoning over the massive space.
 
 ## 🚀 Setting up environment 🚀
@@ -21,7 +21,7 @@ pip install pandas
 ```
 
 ## 🥘 Data for training
-Our curated Stage 1 & Stage 2 adn fine-tuning datasets are open-sourced on [Zenodo](https://doi.org/10.5281/zenodo.18805220)
+Our curated Stage 1 & Stage 2 and fine-tuning datasets are open-sourced on [Zenodo](https://doi.org/10.5281/zenodo.18805220)
 
 ## 🍳 Model Checkpoint
 We provide pretrained, fine-tuned, and distilled weights on [HuggingFace](https://huggingface.co/ReaganGen/RNAOpt/tree/main)
