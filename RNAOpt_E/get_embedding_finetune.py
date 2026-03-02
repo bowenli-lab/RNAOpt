@@ -10,7 +10,7 @@ import torch.nn as nn
 
 if __name__ == "__main__":
     # Load configuration
-    config = load_config('/home/reagan/Projects/RNA_optimization/model/models_put_on_github/model_modules/configs/inference_config.yaml')
+    config = load_config('inference_config.yaml')
 
     # Initialize tokenizer
     tokenizer = RNATokenizer()
@@ -70,6 +70,6 @@ print("labels_array shape: ", labels_array.shape)
 gc_label_array = np.array(seq_gc_content_list)
 
 # Save both into one file
-np.savez("/home/reagan/Projects/RNA_optimization/model/models_put_on_github/UMAP_finetune/embeddings/all_UTR_data_embedding_with_labels.npz", embeddings=embeddings_array, hl_labels=labels_array, gc_labels=gc_label_array)
+np.savez("all_UTR_data_embedding_with_labels.npz", embeddings=embeddings_array, hl_labels=labels_array, gc_labels=gc_label_array)
 print("✅ Saved to embedding_with_labels.npz")
         
