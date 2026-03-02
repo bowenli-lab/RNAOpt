@@ -2,23 +2,58 @@
 Welcome to the official implementation of **RNAOpt**, an mRNA design platform with inference time reasoning over the massive space.
 
 ## 🚀 Setting up environment 🚀
+Create new environment:
+
+```
+
+conda create -n rnaopt python=3.10.12
+conda activate rnaopt
+
+```
+
+Then install the packages used:
 
 ```
 
 pip install torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cu124
 pip install packaging
 pip install mamba-ssm==2.2.2
+pip install causal-conv1d
+pip install lightning==2.4.0
+pip install h5py
+pip install pandas
+pip install biopython
 
-# Mamba-ssm sometimes need to install from github resource, like the causal-conv1d below
+
+```
+
+
+If the installation of mamba-ssm and casual-conv1d are not successful (frequently happens), you can choose to install manually by two methods:
+Run this command on your own machine to get the information for versions, then look up for built wheels from the release of [mamba](https://github.com/state-spaces/mamba/releases) and [causal_conv1d](https://github.com/Dao-AILab/causal-conv1d/releases) repository:
+
+```
+import sys
+import torch
+print(f"🍱 Python Version: {sys.version.split()[0]}")
+print(f"🍛 PyTorch Version: {torch.__version__}")
+print(f"🧪 CUDA Version: {torch.version.cuda}")
+print(f"🥨 Use CXX11 ABI: {torch._C._GLIBCXX_USE_CXX11_ABI}")
+
+```
+If there is no pre-built wheel for your machine environment, you can download the code and build by yourself:
+
+```
+
+git clone https://github.com/state-spaces/mamba.git
+cd mamba
+pip install .
 
 git clone https://github.com/Dao-AILab/causal-conv1d.git
 cd causal-conv1d
 pip install .
-pip install lightning==2.4.0
-pip install h5py
-pip install pandas
 
 ```
+
 
 ## 🥘 Data for training
 Our curated Stage 1 & Stage 2 and fine-tuning datasets are open-sourced on [Zenodo](https://doi.org/10.5281/zenodo.18805220)
