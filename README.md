@@ -4,6 +4,7 @@ Welcome to the official implementation of **RNAOpt**, an mRNA design platform wi
 ## 🚀 Setting up environment 🚀
 
 ```
+
 pip install torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cu124
 pip install packaging
 pip install mamba-ssm==2.2.2
@@ -16,6 +17,7 @@ pip install .
 pip install lightning==2.4.0
 pip install h5py
 pip install pandas
+
 ```
 
 ## 🥘 Data for training
@@ -28,6 +30,7 @@ We provide pretrained, fine-tuned, and distilled weights on [HuggingFace](https:
 To initiate or continue pre-training. Please use the RNAOpt_E/pretrain.py. Use the command:
 
 ```
+
 python RNAOpt_E/pretrain.py --config <Path to pretrain config file>
 
 ```
@@ -39,7 +42,9 @@ Note: Ensure the paths for `train`, `val`, and `test` files, as well as `ckpt_di
 Use the RNAOpt_E/finetune.py to fine-tune the model with the command:
 
 ```
+
 python RNAOpt_E/pretrain.py --config <Path to finetune config file>
+
 ```
 
 Note: Apart from paths for `train`, `val`, `test`, `ckpt_dir`, `log_dir` in the config files. It is also important to load the pretrained checkpoint path `pretrained_model_path` in the config file. Please also remember to keep the model architecture the same as the pretrained model.
@@ -48,7 +53,9 @@ Note: Apart from paths for `train`, `val`, `test`, `ckpt_dir`, `log_dir` in the 
 To perform high-throughput inference and score mRNA candidates, please use the RNAOpt_E/inference.py with the command:
 
 ```
+
 python RNAOpt_E/inference.py --config <Path to inference config file>
+
 ```
 
 If you need to customize the output format of the predictions, please modify RNAOpt_E/inference.py directly.
@@ -65,13 +72,16 @@ There are a few important parameters that could be adjusted：
 To perform mRNA design, use the command as following:
 
 ```
+
 python RNAOpt_T/RNAOpt_T.py --config <Path to RNAOpt_T search config file>
+
 ```
 
 
 After getting the history of sequences that are checked, we select the candidates with the following script:
 
 ```
+
 import pandas as pd
 
 # Load the CSV file
@@ -89,6 +99,7 @@ top3_sequences = final_step_df.sort_values("Top_HL", ascending=False).head(3)
 
 # Display or save
 print(top3_sequences)
+
 ```
 
 The selected sequence candidates are sent for wet lab experiments
