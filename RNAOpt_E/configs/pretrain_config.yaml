@@ -39,11 +39,11 @@ JambaConfig:
   mamba_dt_rank: auto
 
 # Data path and output directories
-train_file: /home/reagan/Projects/RNA_optimization/model/model_with_UTR/pretrain_data/processed_downloaded_data/ranopt_ncbi_mRNA_mammals_UTR_CDS_merged_deduplicated_ATCG_only_train.hdf5
-val_file: /home/reagan/Projects/RNA_optimization/model/model_with_UTR/pretrain_data/processed_downloaded_data/ranopt_ncbi_mRNA_mammals_UTR_CDS_merged_deduplicated_ATCG_only_val.hdf5
-test_file: /home/reagan/Projects/RNA_optimization/model/model_with_UTR/pretrain_data/processed_downloaded_data/ranopt_ncbi_mRNA_mammals_UTR_CDS_merged_deduplicated_ATCG_only_test.hdf5
-ckpt_dir: /home/reagan/Projects/RNA_optimization/model/models_put_on_github/test_checkpoint
-log_dir: /home/reagan/Projects/RNA_optimization/model/models_put_on_github/test_checkpoint
+train_file: ranopt_ncbi_mRNA_mammals_UTR_CDS_merged_deduplicated_ATCG_only_train.hdf5
+val_file: ranopt_ncbi_mRNA_mammals_UTR_CDS_merged_deduplicated_ATCG_only_val.hdf5
+test_file: ranopt_ncbi_mRNA_mammals_UTR_CDS_merged_deduplicated_ATCG_only_test.hdf5
+ckpt_dir: <Path of the directory to store checkpoint>
+log_dir: <Path of the directory to store training log files>
 
 # Checkpointing configuration
 monitor: val_loss

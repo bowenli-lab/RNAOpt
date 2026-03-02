@@ -35,12 +35,12 @@ JambaConfig:
   mamba_dt_rank: auto
 
 # Data path and output directories
-train_file: /home/reagan/Projects/RNA_optimization/model/models_put_on_github/finetune_data_UTR/all_HLs_human_mouse_UTR_train.csv
-val_file: /home/reagan/Projects/RNA_optimization/model/models_put_on_github/finetune_data_UTR/all_HLs_human_mouse_UTR_val.csv
-test_file: /home/reagan/Projects/RNA_optimization/model/models_put_on_github/finetune_data_UTR/all_HLs_human_mouse_UTR_test.csv
-ckpt_dir: /home/reagan/Projects/RNA_optimization/model/models_put_on_github/test_checkpoint
-log_dir: /home/reagan/Projects/RNA_optimization/model/models_put_on_github/test_checkpoint
-pretrained_model_path: /home/reagan/Projects/RNA_optimization/model/models_put_on_github/14M_stage1_pretrained_on_mammals.ckpt
+train_file: <Path to fine-tuning train file>
+val_file: <Path to fine-tuning validation file>
+test_file: <Path to fine-tuning test file>
+ckpt_dir: <Path of the directory to store checkpoint>
+log_dir: <Path of the directory to store training log files>
+pretrained_model_path: <Path to pretrained checkpoint>
 
 # Checkpointing configuration
 monitor: val_loss

@@ -31,5 +31,5 @@ JambaConfig:
   mamba_dt_rank: auto
 
 # Data path and output directories
-data_file: /home/reagan/Projects/RNA_optimization/model/models_put_on_github/data/generalization_data/icodon_specie_h.csv
-finetuned_model_path: /home/reagan/Projects/RNA_optimization/model/models_put_on_github/barplot/compare_other_models/our_model/3fold_utr_finetune_early_stopping/run_0/epoch=34_step=6265_train_loss=0.3330895603_val_loss=9.9434829894_run0.ckpt
+data_file: <Path to file used for inference>
+finetuned_model_path: <Path to finetuned model checkpoint>
