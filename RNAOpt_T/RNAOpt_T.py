@@ -1,6 +1,12 @@
 
 import sys
-sys.path.append("/home/reagan/Projects/rnaopt/model_modules")
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+
+
+sys.path.append(os.path.join(BASE_DIR, "..", "RNAOpt_E"))
 
 from model import RNA_MaskedLM_finetune, RNA_MaskedLM_pretrain
 from utils import RNATokenizer, RNADataset_search, load_config, load_config_distill_search
@@ -34,14 +40,15 @@ from collections import defaultdict
 import pandas as pd
 from Bio.Seq import Seq
 import argparse
-import os
+
+
 
 
 
 
 
 # --- Load codon frequency table ---
-human_codon_freq_path = "/home/reagan/Projects/rnaopt/human_codon_freq_table.txt"
+human_codon_freq_path = os.path.join(BASE_DIR, "human_codon_freq_table.txt")
 raw_usage = {}
 with open(human_codon_freq_path, 'r') as f:
     for line in f:
@@ -289,6 +296,9 @@ def CoT_distill_CAI_filter(start_sequence, beam_width=10, max_steps=10, max_len=
             successors_original_o = get_possible_moves(seq, visited_sequences)  # Generate possible next sequences
             # print("Number of possible moves: ")
             # print(len(successors_original_o))
+
+            if len(successors_original_o) == 0:
+              continue
 
             successors_original = remove_bsmBI_bspQI(successors_original_o)
 
