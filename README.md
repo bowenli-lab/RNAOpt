@@ -16,13 +16,16 @@ Then install the packages used:
 ```
 
 pip install torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cu124
+pip install transformers==4.55.2
+pip install huggingface_hub
 pip install packaging
-pip install mamba-ssm==2.2.2
-pip install causal-conv1d
 pip install lightning==2.4.0
 pip install h5py
 pip install pandas
 pip install biopython
+pip install git+https://github.com/Benjamin-Lee/CodonAdaptationIndex.git
+
+pip install mamba-ssm[causal-conv1d]
 
 
 ```
@@ -40,7 +43,7 @@ print(f"🧪 CUDA Version: {torch.version.cuda}")
 print(f"🥨 Use CXX11 ABI: {torch._C._GLIBCXX_USE_CXX11_ABI}")
 
 ```
-After downloading the machine, use `pip install` to install it.
+After downloading the prebuilt wheels to the machine, use `pip install` to install them.
 
 If there is no pre-built wheel for your machine environment, you can download the code and build by yourself:
 
