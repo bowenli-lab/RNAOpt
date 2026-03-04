@@ -136,9 +136,9 @@ def score_function_CAI_filter(sequences, max_len=None, model=None, tokenizer=Non
     with torch.no_grad():
         for batch in data_loader:
             
-            input_ids = batch["input_ids"]  # Move to GPU
+            input_ids = batch["input_ids"].to("cuda")  # Move to GPU
             # print("input_ids: ", input_ids)
-            attention_mask = batch["attention_mask"]  # Move to GPU
+            attention_mask = batch["attention_mask"].to("cuda")  # Move to GPU
             
             value, _, _ = model(input_ids, attention_mask)
             all_predictions.append(value)
@@ -215,9 +215,7 @@ def CoT_distill_CAI_filter(start_sequence, beam_width=10, max_steps=10, max_len=
     distill_model.load_state_dict(distill_full_state_dict, strict=True)
     distill_model = distill_model.to(torch.bfloat16)
     
-    distill_model.eval().to("cuda:0")  # Set to eval mode and move to GPU
-    distill_model = torch.nn.DataParallel(distill_model, device_ids=[0, 1, 2, 3])
-
+    distill_model.eval().to("cuda")  # Set to eval mode and move to GPU
 
     full_model = RNA_MaskedLM_finetune(config=full_model_config)
     full_model_checkpoint = torch.load(full_model_path, map_location="cpu", weights_only=False)
@@ -228,8 +226,7 @@ def CoT_distill_CAI_filter(start_sequence, beam_width=10, max_steps=10, max_len=
     full_model.load_state_dict(full_model_full_state_dict, strict=True)
 
     full_model = full_model.to(torch.bfloat16)
-    full_model.eval().to("cuda:0")  # Set to eval mode and move to GPU
-    full_model = torch.nn.DataParallel(full_model, device_ids=[0, 1, 2, 3])
+    full_model.eval().to("cuda")
 
     visited_sequences = set()
     
@@ -249,7 +246,7 @@ def CoT_distill_CAI_filter(start_sequence, beam_width=10, max_steps=10, max_len=
     
     print("Initial Score: ", initial_hl)
     print("Initial CAI: ", initial_CAI)
-    print("Initial Merged Socre: ", initial_merged_score)
+    print("Initial Fitness Socre: ", initial_merged_score)
 
     
     beam = [start_sequence]  # Initialize beam with the initial sequence and its score
