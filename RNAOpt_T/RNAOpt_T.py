@@ -416,7 +416,7 @@ if __name__ == "__main__":
         cds = back_translate_least_frequent(input_protein_sequence, AA_TO_LEAST_CODON) + "TGA"
     
     else:
-        cds = config["cds_gluc"].upper()  # Convert to uppercase to ensure consistency
+        cds = config["cds"].upper()  # Convert to uppercase to ensure consistency
     
     utr5 = config["utr5"]
     utr3 = config["utr3"]
