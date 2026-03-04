@@ -306,7 +306,7 @@ def CoT_distill_CAI_filter(start_sequence, beam_width=10, max_steps=10, max_len=
 
             random.shuffle(successors_original)
 
-            num_samples = int(partial_sampling_percentage * len(successors_original))  # Sample a fraction of successors
+            num_samples = max(1, int(round(partial_sampling_percentage * len(successors_original))))  # Sample a fraction of successors
             # print(f"Number of successors for sequence: {num_samples}")
             successors = successors_original[:num_samples]  # Limit the number of successors to 100 for efficiency
             seq_dir_to_full_prediction = successors_original[num_samples:num_samples + beta]  # Keep the original sequence for direct full model prediction
