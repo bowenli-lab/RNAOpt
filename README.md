@@ -108,6 +108,9 @@ There are a few important parameters that could be adjusted：
 - `beta` is the number of sequences that are directly send to RNAOpt-E prediction in the diversity perservation
 - `theta` is the weight of CAI in the definition of the fitnes score (setting it high will make the molecule design more CAI biased, recommend keep the original value)
 - `patience` is the threshold of early stopping for no improvement of molecule fitness
+- `batch_size` is the batch size used when perform inference
+- `max_steps` the max number of steps for optimization
+- `partial_sampling_percentage` the percentage used for sampling for the partial sampling strategy
 
 To perform mRNA design, use the command as following:
 
