@@ -351,7 +351,7 @@ def CoT_distill_CAI_filter(start_sequence, beam_width=10, max_steps=10, max_len=
             best_hl = best_hl_s
             best_CAI = best_CAI_s
             no_improvement_counter = 0
-            print(f"New Best Merged Metric: {best_merged_metric}, Best HL: {best_hl}, Best CAI: {best_CAI}")
+            print(f"New Best Fitness: {best_merged_metric}")
         else:
             no_improvement_counter += 1
             
