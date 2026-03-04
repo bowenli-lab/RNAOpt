@@ -148,7 +148,7 @@ print(top3_sequences)
 The selected sequence candidates are sent for wet lab experiments
 
 ## 🍞 Online GUI usage
-We offer a ready-to-use [Colab notebook](https://colab.research.google.com/drive/1rUlp0QwX6QcOyYT1fS8SjgyFBcYLAK7l#scrollTo=Cp4PMVk09z5F&forceEdit=true&sandboxMode=true) with an integrated GUI, enabling users to bypass complex local environment configurations and run optimizations directly in the browser.
+We offer a ready-to-use [Colab notebook](https://colab.research.google.com/drive/1rUlp0QwX6QcOyYT1fS8SjgyFBcYLAK7l#scrollTo=v-3Kpxp_WP6W&forceEdit=true&sandboxMode=true) with an integrated GUI, enabling users to bypass complex local environment configurations and run optimizations directly in the browser.
 
 ## 🍟 Contributing
 We greatly welcome contributions to scGPT. Please submit a pull request if you have any ideas or bug fixes. We also welcome any issues you encounter while using scGPT
