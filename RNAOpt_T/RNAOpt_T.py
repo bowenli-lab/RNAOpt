@@ -297,10 +297,12 @@ def CoT_distill_CAI_filter(start_sequence, beam_width=10, max_steps=10, max_len=
             # print("Number of possible moves: ")
             # print(len(successors_original_o))
 
-            if len(successors_original_o) == 0:
-              continue
+            
 
             successors_original = remove_bsmBI_bspQI(successors_original_o)
+
+            if len(successors_original) == 0:
+              continue
 
             random.shuffle(successors_original)
 
