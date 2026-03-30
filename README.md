@@ -83,7 +83,7 @@ Use the RNAOpt_Evaluator/finetune.py to fine-tune the model with the command:
 
 ```
 
-python RNAOpt_Evaluator/pretrain.py --config <Path to finetune config file>
+python RNAOpt_Evaluator/finetune.py --config <Path to finetune config file>
 
 ```
 
