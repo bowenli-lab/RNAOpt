@@ -66,41 +66,41 @@ Our curated Stage 1 & Stage 2 and fine-tuning datasets are open-sourced on [Zeno
 ## 🍳 Model Checkpoint
 We provide pretrained, fine-tuned, and distilled weights on [HuggingFace](https://huggingface.co/ReaganGen/RNAOpt/tree/main)
 
-## 🍜 RNAOpt-E Pretrain
-To initiate or continue pre-training. Please use the RNAOpt_E/pretrain.py. Use the command:
+## 🍜 RNAOpt_Evaluator Pretrain
+To initiate or continue pre-training. Please use the RNAOpt_Evaluator/pretrain.py. Use the command:
 
 ```
 
-python RNAOpt_E/pretrain.py --config <Path to pretrain config file>
+python RNAOpt_Evaluator/pretrain.py --config <Path to pretrain config file>
 
 ```
 
 Note: Ensure the paths for `train`, `val`, and `test` files, as well as `ckpt_dir`(checkpoint save path) and `log_dir`(log file save path), are correctly updated in your configuration file. We recommend maintaining the default training settings.
 
 
-## 🍲 RNAOpt-E finetune
-Use the RNAOpt_E/finetune.py to fine-tune the model with the command:
+## 🍲 RNAOpt_Evaluator finetune
+Use the RNAOpt_Evaluator/finetune.py to fine-tune the model with the command:
 
 ```
 
-python RNAOpt_E/pretrain.py --config <Path to finetune config file>
+python RNAOpt_Evaluator/pretrain.py --config <Path to finetune config file>
 
 ```
 
 Note: Apart from paths for `train`, `val`, `test`, `ckpt_dir`, `log_dir` in the config files. It is also important to load the pretrained checkpoint path `pretrained_model_path` in the config file. Please also remember to keep the model architecture the same as the pretrained model.
 
-## 🍰 RNAOpt-E inference
+## 🍰 RNAOpt_Evaluator inference
 To perform high-throughput inference and score mRNA candidates, please use the RNAOpt_E/inference.py with the command:
 
 ```
 
-python RNAOpt_E/inference.py --config <Path to inference config file>
+python RNAOpt_Evaluator/inference.py --config <Path to inference config file>
 
 ```
 
 If you need to customize the output format of the predictions, please modify RNAOpt_E/inference.py directly.
 
-## 🍣 RNAOpt-T 
+## 🍣 RNAOpt_Sequence_Generator 
 We have included the Human Codon frequency table as an example, sourced from [Kazusa](https://www.kazusa.or.jp/codon/cgi-bin/showcodon.cgi?species=9606&aa=1&style=N), please look for the species that you need from this repo. You need to import the codon frequency table by setting the path `human_codon_freq_path` in the RNAOpt_T.py. 
 
 There are a few important parameters that could be adjusted：
@@ -116,7 +116,7 @@ To perform mRNA design, use the command as following:
 
 ```
 
-python RNAOpt_T/RNAOpt_T.py --config <Path to RNAOpt_T search config file>
+python RNAOpt_Sequence_generator/RNAOpt_T.py --config <Path to RNAOpt_T search config file>
 
 ```
 
@@ -128,7 +128,7 @@ After getting the history of sequences that are checked, we select the candidate
 import pandas as pd
 
 # Load the CSV file
-csv_path = <Path to the result file from RNAOpt-T>
+csv_path = <Path to the result file from RNAOpt_Sequence_generator>
 df = pd.read_csv(csv_path)
 
 # Find the maximum step (i.e., the final round)
@@ -151,7 +151,7 @@ The selected sequence candidates are sent for wet lab experiments
 We offer a ready-to-use [Colab notebook](https://colab.research.google.com/drive/1rUlp0QwX6QcOyYT1fS8SjgyFBcYLAK7l#scrollTo=v-3Kpxp_WP6W&forceEdit=true&sandboxMode=true) with an integrated GUI, enabling users to bypass complex local environment configurations and run optimizations directly in the browser.
 
 ## 🍟 Contributing
-We greatly welcome contributions to scGPT. Please submit a pull request if you have any ideas or bug fixes. We also welcome any issues you encounter while using scGPT
+We greatly welcome contributions to RNAOpt. Please submit a pull request if you have any ideas or bug fixes. We also welcome any issues you encounter while using RNAOpt
 
 ## Acknowledgements
 We sincerely thank the authors of following open-source projects:
